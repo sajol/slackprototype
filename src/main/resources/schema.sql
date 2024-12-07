@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS users (
+     id SERIAL PRIMARY KEY,
+     name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS channels (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS memberships (
+   id SERIAL PRIMARY KEY,
+   user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+   channel_id INT NOT NULL REFERENCES channels(id) ON DELETE CASCADE,
+   UNIQUE(user_id, channel_id)
+);

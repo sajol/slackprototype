@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:latest
+    container_name: local-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    volumes:
+      - redis-data:/data
+  mongodb:
+    image: mongo:latest
+    container_name: local-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - mongodb-network
+  postgres:
+    image: postgres:latest
+    container_name: local-postgres
+    environment:
+      POSTGRES_USER: slackuser
+      POSTGRES_PASSWORD: slackpass
+      POSTGRES_DB: slackdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - postgres-network
+
+networks:
+  app-network:
+  mongodb-network:
+  postgres-network:
+
+volumes:
+  redis-data:
+  mongodb-data:
+  postgres-data:
