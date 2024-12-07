@@ -76,3 +76,68 @@ This project extensively uses **Kotlin Coroutines** to handle asynchronous, non-
     - Kotlin Coroutines bridge the gap between the `Mono`/`Flux` APIs of Spring WebFlux and the suspendable functions of Kotlin.
 
 ---
+
+# Running the Project
+
+Follow these steps to run the Slack Prototype application locally:
+
+## Prerequisites
+
+- Ensure **Docker** is installed and running.
+- Install **Java 17** for running the Spring Boot application.
+- Install **Gradle** or use the provided Gradle wrapper (`./gradlew`).
+
+---
+
+# Steps to Run
+
+## Clone the Repository
+
+```bash
+git clone git@github.com:sajol/slackprototype.git
+cd slackprototype
+```
+
+## Start Required Services
+
+### Use Docker Compose to start Redis, MongoDB, and PostgreSQL:
+
+```bash
+docker-compose up -d
+```
+
+## Run the Application
+### Use the Gradle wrapper to start the Spring Boot application:
+```bash
+./gradlew bootRun
+```
+
+## Access the Application
+- **WebSocket Endpoint**: ws://localhost:8080/ws?userId=<userId>
+- **REST API Base UR**L: http://localhost:8080/
+
+## Stop the Application
+- Stop the Spring Boot application with Ctrl+C.
+- To stop all services, run:
+```bash
+docker-compose down    
+```
+
+# Testing the WebSocket Endpoint
+## Connect
+Use a WebSocket client like Postman, Insomnia, or wscat to connect:
+```bash
+ws://localhost:8080/ws?userId=<userId>
+```
+
+## Send a Test Message
+Example payload:
+```bash
+curl -XPOST http://localhost:8080/messages \
+-H "Content-Type: application/json" \
+-d '{
+  "senderId": "3",
+  "text": "One update from my side. Tomorrow I will be unavailable from around 14 to 16",
+  "channelId": "1"
+}'
+```
