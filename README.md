@@ -141,3 +141,24 @@ curl -XPOST http://localhost:8080/messages \
   "channelId": "1"
 }'
 ```
+
+## Script for seed data
+```postgresql
+select * from users;
+-- insert users
+insert into users(name) values ('user1');
+insert into users(name) values ('user2');
+insert into users(name) values ('user3');
+insert into users(name) values ('user4');
+-- insert channels
+select * from channels;
+insert into channels(name, type) values ('channel1', 'channel');
+insert into channels(name, type) values ('channel2', 'channel');
+insert into channels(name, type) values ('channel3', 'channel');
+-- insert memberships
+select * from memberships;
+insert into memberships(user_id, channel_id) values (1, 1);
+insert into memberships(user_id, channel_id) values (2, 1);
+insert into memberships(user_id, channel_id) values (3, 2);
+insert into memberships(user_id, channel_id) values (4, 2);
+```
